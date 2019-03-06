@@ -5,13 +5,13 @@ import org.springframework.context.annotation.*;
 @Configuration
 class ChargeServiceConfiguration {
     @Bean
-    PriceFactory priceFactory(){
+    PriceFactory priceFactory() {
         return new DefaultPriceFactory();
     }
 
     @Bean
-    ChargeService chargingStationCalculator(PriceRepository priceRepository, PriceFactory priceFactory) {
-        return new ChargeService(priceRepository, priceFactory);
+    ChargeService chargingStationCalculator(PriceRepository priceRepository, CustomerRepository customerRepository, PriceFactory priceFactory) {
+        return new ChargeService(priceRepository, customerRepository, priceFactory);
     }
 
 }

@@ -13,11 +13,13 @@ import static java.util.Objects.*;
 
 public class ChargeService {
     private final PriceRepository priceRepository;
+    private final CustomerRepository customerRepository;
     private final PriceFactory priceFactory;
 
 
-    ChargeService(PriceRepository priceRepository, PriceFactory priceFactory) {
+    ChargeService(PriceRepository priceRepository, CustomerRepository customerRepository, PriceFactory priceFactory) {
         this.priceRepository = priceRepository;
+        this.customerRepository = customerRepository;
         this.priceFactory = priceFactory;
     }
 
@@ -30,6 +32,7 @@ public class ChargeService {
 
     @Transactional
     public BigDecimal calculate(LocalDateTime startTime, LocalDateTime finishTime, Long customerId) {
+
         DailyPriceMappingCreator dailyPriceMappingCreator = new DailyPriceMappingCreator();
 
         List<Price> priceDefinitions = priceRepository.findAll();
@@ -48,7 +51,13 @@ public class ChargeService {
             BigDecimal priceInThisMinute = prices.get(minuteOfDay % 1439);
             sum = sum.add(priceInThisMinute);
         }
+        Customer customer = customerRepository.findById(customerId);
 
-        return sum;
+
+        return discountContext(customer).discount(sum);
+    }
+
+    private DiscountStrategy discountContext(Customer customer) {
+        return customer.customerType() == CustomerType.VIP ? new TenPercentDiscount() : new NoDiscount();
     }
 }

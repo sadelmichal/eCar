@@ -32,7 +32,7 @@ class ChargingSpec extends Specification {
             .build()
 
     final int defaultCustomer = 0
-    final int vipCustomer = 1
+    final int vipCustomer = 42
 
     static private LocalDateTime time(String time){
         return LocalDateTime.parse(time)
@@ -96,6 +96,21 @@ class ChargingSpec extends Specification {
             started <<  [time("2019-01-01T03:00"), time("2019-01-01T03:00"), time("2019-01-02T03:00")]
             finished << [time("2019-01-01T03:30"), time("2019-01-02T04:00"), time("2019-01-01T03:00")]
             charge << [60, 870, 0]
+    }
+
+    def "system should apply 10% discount for a VIP customer"(){
+        given: "system have one default price of 0.5 EUR all day long"
+            chargingStationCalculator.add(defaultPrice)
+        and: "charging started at midnight"
+            def startedAt = time("2019-01-01T00:00")
+        and: "charging finished at midnight the next day"
+            def finishedAt = time("2019-01-02T00:00")
+        and: "system calculates normal price for a normal customer"
+            def normalCharge = chargingStationCalculator.calculate(startedAt, finishedAt, defaultCustomer)
+        when: "system calculates normal price for a VIP customer"
+            def discountedCharge = chargingStationCalculator.calculate(startedAt, finishedAt, vipCustomer)
+        then: "charge for a VIP customer should be 10% lower than charge of a normal customer"
+            discountedCharge == normalCharge - (0.1 * normalCharge)
     }
 
 }
