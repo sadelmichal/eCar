@@ -13,19 +13,18 @@ import static java.util.Objects.*;
 
 public class ChargeService {
     private final PriceRepository priceRepository;
-    private final PriceMapper priceMapper;
+    private final PriceFactory priceFactory;
 
-    ChargeService(PriceRepository priceRepository, PriceMapper priceMapper) {
+
+    ChargeService(PriceRepository priceRepository, PriceFactory priceFactory) {
         this.priceRepository = priceRepository;
-        this.priceMapper = priceMapper;
+        this.priceFactory = priceFactory;
     }
 
     @Transactional
     public void add(PriceDto priceDto) {
         requireNonNull(priceDto);
-        final Price price = priceMapper.fromDto(priceDto);
-        price.setEffectSince(Optional.ofNullable(price.getEffectSince()).orElse(LocalTime.MIDNIGHT));
-        price.setEffectUntil(Optional.ofNullable(price.getEffectUntil()).orElse(LocalTime.MAX));
+        Price price = priceFactory.from(priceDto);
         priceRepository.save(price);
     }
 
