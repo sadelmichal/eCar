@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/sadelmichal/eCar.svg?branch=master)](https://travis-ci.com/sadelmichal/eCar)
+
 # eCar
 
 eCar company is going to introduce new way pricing in their new, successful backoffice supporting electric vehicles charging network. 
