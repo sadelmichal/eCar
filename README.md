@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/2cedb11dce3a4d04be2e48f002ca7b40)](https://app.codacy.com/app/sadelmichal/eCar?utm_source=github.com&utm_medium=referral&utm_content=sadelmichal/eCar&utm_campaign=Badge_Grade_Dashboard)
 [![Build Status](https://travis-ci.com/sadelmichal/eCar.svg?branch=master)](https://travis-ci.com/sadelmichal/eCar)
 
 # eCar
