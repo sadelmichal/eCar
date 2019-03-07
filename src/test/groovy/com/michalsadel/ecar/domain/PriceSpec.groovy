@@ -2,14 +2,15 @@ package com.michalsadel.ecar.domain
 
 
 import com.michalsadel.ecar.exceptions.PriceOverlapsAnotherPriceException
+import spock.lang.Specification
 import spock.lang.Unroll
 
 import java.time.LocalTime
 
-class PriceSpec extends ServiceSpec {
+class PriceSpec extends Specification implements ServiceSpec {
     def "should have a price with time span extended all day long"(){
         given: "default price without time span"
-            def price = createDefaultPrice(1)
+            def price = createDefaultPrice()
         when: "price is added to the system"
             price = chargeService.add(price)
         then: "time span is created for all day"
@@ -21,7 +22,7 @@ class PriceSpec extends ServiceSpec {
 
     def "should throw an exception when time span of a price overlaps non-default price already in the system"(){
         given: "have default price in the system"
-            chargeService.add(createDefaultPrice(1))
+            chargeService.add(createDefaultPrice())
         and: "have one non-default price in the system"
             chargeService.add(createPrice("08:00", "16:00"))
         when:
@@ -32,9 +33,9 @@ class PriceSpec extends ServiceSpec {
 
     def "should throw an exception when another default price is already in the system"(){
         given: "have default price in the system"
-            chargeService.add(createDefaultPrice(1))
+            chargeService.add(createDefaultPrice())
         when: "add another price without time span"
-            chargeService.add(createDefaultPrice(2))
+            chargeService.add(createDefaultPrice())
         then:
             thrown(PriceOverlapsAnotherPriceException)
     }

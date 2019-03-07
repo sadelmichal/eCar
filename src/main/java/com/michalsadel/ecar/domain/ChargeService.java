@@ -34,7 +34,7 @@ public class ChargeService {
                 .filter(p -> p.overlaps(price))
                 .findFirst()
                 .ifPresent(p -> {
-                    throw new PriceOverlapsAnotherPriceException();
+                    throw new PriceOverlapsAnotherPriceException(p.getEffectSince(), p.getEffectUntil());
                 });
 
         return priceFactory.from(priceRepository.save(price));

@@ -8,9 +8,9 @@ import java.time.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class TimeRangeDto {
+public class DateTimeRangeDto {
     @NonNull
-    private LocalTime startsAt;
+    private LocalDateTime start;
     @NonNull
-    private LocalTime finishesAt;
+    private LocalDateTime finish;
 }

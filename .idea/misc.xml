@@ -7,6 +7,13 @@
       </map>
     </option>
   </component>
+  <component name="EntryPointsManager">
+    <list size="3">
+      <item index="0" class="java.lang.String" itemvalue="org.springframework.web.bind.annotation.ExceptionHandler" />
+      <item index="1" class="java.lang.String" itemvalue="org.springframework.web.bind.annotation.PostMapping" />
+      <item index="2" class="java.lang.String" itemvalue="org.springframework.web.bind.annotation.RestController" />
+    </list>
+  </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
