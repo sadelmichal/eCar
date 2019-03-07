@@ -2,6 +2,7 @@ package com.michalsadel.ecar.dto;
 
 import lombok.*;
 
+import javax.validation.constraints.*;
 import java.time.*;
 
 @Builder
@@ -9,8 +10,8 @@ import java.time.*;
 @AllArgsConstructor
 @Data
 public class TimeRangeDto {
-    @NonNull
+    @NotNull
     private LocalTime startsAt;
-    @NonNull
+    @NotNull
     private LocalTime finishesAt;
 }

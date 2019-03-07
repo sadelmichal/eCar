@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @SpringBootTest(classes = [Application])
-@DirtiesContext
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class PriceControllerSpec extends MvcSpec implements ServiceSpec {
     @Autowired
     private ChargeService chargeService
@@ -38,4 +38,15 @@ class PriceControllerSpec extends MvcSpec implements ServiceSpec {
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath('$.error', containsString("Price provided overlaps price defined in the system between")))
     }
+    def "should not be allowed to partially define time range in price definition"(){
+        when: "another price definition is added without finishesAt"
+            ResultActions price = mvc.perform(
+                post("/price")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content('{ "perMinute": 1, "effectedIn": {"startsAt": "05:00"} }'))
+        then:
+            price.andExpect(status().isBadRequest())
+
+    }
+
 }

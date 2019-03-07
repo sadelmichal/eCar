@@ -17,7 +17,7 @@ class PriceController {
     }
 
     @PostMapping("/price")
-    ResponseEntity addPrice(@RequestBody @Valid PriceDto priceDto) {
+    ResponseEntity addPrice(@Valid @RequestBody PriceDto priceDto) {
         chargeService.add(priceDto);
         return ResponseEntity.accepted().build();
     }
