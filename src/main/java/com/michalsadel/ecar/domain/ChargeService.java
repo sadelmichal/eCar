@@ -1,7 +1,6 @@
 package com.michalsadel.ecar.domain;
 
 import com.michalsadel.ecar.dto.*;
-import com.michalsadel.ecar.exceptions.*;
 import org.springframework.transaction.annotation.*;
 
 import java.math.*;
@@ -16,31 +15,21 @@ public class ChargeService {
     private final PriceRepository priceRepository;
     private final CustomerRepository customerRepository;
     private final PriceFactory priceFactory;
+    private final PriceValidator priceValidator;
 
 
-    ChargeService(PriceRepository priceRepository, CustomerRepository customerRepository, PriceFactory priceFactory) {
+    ChargeService(PriceRepository priceRepository, CustomerRepository customerRepository, PriceFactory priceFactory, PriceValidator priceValidator) {
         this.priceRepository = priceRepository;
         this.customerRepository = customerRepository;
         this.priceFactory = priceFactory;
+        this.priceValidator = priceValidator;
     }
 
     @Transactional
     public PriceDto add(PriceDto priceDto) {
         requireNonNull(priceDto);
         Price price = priceFactory.from(priceDto);
-
-        priceRepository.findAll().stream()
-                .filter(p -> p.isDefaultPrice() == price.isDefaultPrice())
-                .filter(p -> p.overlaps(price))
-                .findFirst()
-                .ifPresent(p -> {
-                    throw new PriceOverlapsAnotherPriceException(p.getEffectSince(), p.getEffectUntil());
-                });
-
-        Optional.of(price)
-                .filter(Price::isValid)
-                .orElseThrow(PriceInvalidTimeRangeException::new);
-
+        priceValidator.validate(price);
         return priceFactory.from(priceRepository.save(price));
     }
 

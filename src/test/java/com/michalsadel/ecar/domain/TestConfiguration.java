@@ -2,6 +2,7 @@ package com.michalsadel.ecar.domain;
 
 class TestConfiguration {
     ChargeService chagrgeService() {
-        return new ChargeService(new FakePriceRepository(), new FakeCustomerRepository(), new DefaultPriceFactory());
+        final FakePriceRepository priceRepository = new FakePriceRepository();
+        return new ChargeService(priceRepository, new FakeCustomerRepository(), new DefaultPriceFactory(), new PriceValidator(priceRepository));
     }
 }

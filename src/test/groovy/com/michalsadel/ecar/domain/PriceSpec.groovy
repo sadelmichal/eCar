@@ -1,6 +1,7 @@
 package com.michalsadel.ecar.domain
 
 import com.michalsadel.ecar.exceptions.PriceInvalidTimeRangeException
+import com.michalsadel.ecar.exceptions.PriceIsBelowZeroException
 import com.michalsadel.ecar.exceptions.PriceOverlapsAnotherPriceException
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -76,5 +77,12 @@ class PriceSpec extends Specification implements ServiceSpec {
             chargeService.add(createPrice("04:00", "03:00"))
         then:
             thrown(PriceInvalidTimeRangeException)
+    }
+
+    def "should throw an exception when price definition per minute is below 0"(){
+        when:
+            chargeService.add(createDefaultPrice(-1))
+        then:
+            thrown(PriceIsBelowZeroException)
     }
 }

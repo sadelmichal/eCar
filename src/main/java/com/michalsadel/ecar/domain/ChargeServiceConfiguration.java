@@ -23,8 +23,13 @@ class ChargeServiceConfiguration {
     }
 
     @Bean
-    ChargeService chargingStationCalculator(PriceRepository priceRepository, CustomerRepository customerRepository, PriceFactory priceFactory) {
-        return new ChargeService(priceRepository, customerRepository, priceFactory);
+    PriceValidator priceValidator(PriceRepository priceRepository){
+        return new PriceValidator(priceRepository);
+    }
+
+    @Bean
+    ChargeService chargingStationCalculator(PriceRepository priceRepository, CustomerRepository customerRepository, PriceFactory priceFactory, PriceValidator priceValidator) {
+        return new ChargeService(priceRepository, customerRepository, priceFactory, priceValidator);
     }
 
 }

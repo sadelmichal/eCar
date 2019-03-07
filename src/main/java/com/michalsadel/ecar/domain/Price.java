@@ -28,7 +28,11 @@ class Price {
         return effectSince.isBefore(price.effectUntil) && effectUntil.isAfter(price.effectSince);
     }
 
-    boolean isValid() {
+    boolean isRangeValid() {
         return effectUntil.isAfter(effectSince);
+    }
+
+    boolean isPerMinuteValid() {
+        return !(perMinute.signum() == -1);
     }
 }
