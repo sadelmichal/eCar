@@ -11,4 +11,5 @@ import java.math.*;
 public class PriceDto {
     private BigDecimal perMinute;
     private TimeRangeDto effectedIn;
+    private transient Boolean defaultInSystem;
 }

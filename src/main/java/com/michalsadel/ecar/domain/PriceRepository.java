@@ -7,5 +7,5 @@ import java.util.*;
 interface PriceRepository extends Repository<Price, String> {
     List<Price> findAll();
 
-    String save(Price price);
+    Price save(Price price);
 }

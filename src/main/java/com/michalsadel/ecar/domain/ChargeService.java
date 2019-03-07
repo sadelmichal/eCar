@@ -1,6 +1,7 @@
 package com.michalsadel.ecar.domain;
 
 import com.michalsadel.ecar.dto.*;
+import com.michalsadel.ecar.exceptions.*;
 import org.springframework.transaction.annotation.*;
 
 import java.math.*;
@@ -24,10 +25,19 @@ public class ChargeService {
     }
 
     @Transactional
-    public void add(PriceDto priceDto) {
+    public PriceDto add(PriceDto priceDto) {
         requireNonNull(priceDto);
         Price price = priceFactory.from(priceDto);
-        priceRepository.save(price);
+
+        priceRepository.findAll().stream()
+                .filter(p -> p.isDefaultPrice() == price.isDefaultPrice())
+                .filter(p -> p.overlaps(price))
+                .findFirst()
+                .ifPresent(p -> {
+                    throw new PriceOverlapsAnotherPriceException();
+                });
+
+        return priceFactory.from(priceRepository.save(price));
     }
 
     @Transactional
@@ -52,8 +62,6 @@ public class ChargeService {
             sum = sum.add(priceInThisMinute);
         }
         Customer customer = customerRepository.findById(customerId);
-
-
         return discountContext(customer).discount(sum);
     }
 

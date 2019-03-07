@@ -14,10 +14,10 @@ class FakePriceRepository implements PriceRepository {
     }
 
     @Override
-    public String save(Price price) {
+    public Price save(Price price) {
         requireNonNull(price);
         price.setId(Optional.ofNullable(price.getId()).orElse(UUID.randomUUID().toString()));
         map.put(price.getId(), price);
-        return price.getId();
+        return price;
     }
 }

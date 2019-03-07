@@ -9,8 +9,8 @@ import spock.lang.Unroll
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class ChargingSpec extends Specification {
-    ChargeService chargingStationCalculator = new TestConfiguration().chargingStationCalculator()
+class ChargeServiceSpec extends Specification {
+    ChargeService chargingService = new TestConfiguration().chagrgeService()
 
     PriceDto defaultPrice = PriceDto.builder()
             .perMinute(new BigDecimal("0.5"))
@@ -41,7 +41,7 @@ class ChargingSpec extends Specification {
     @Unroll
     def "should be no charge between #started and #finished if there is no price definition available in system"(){
         expect:
-            chargingStationCalculator.calculate(started, finished, defaultCustomer) == 0
+            chargingService.calculate(started, finished, defaultCustomer) == 0
         where:
             started <<  [time("2019-01-01T03:00"), time("2019-01-01T03:00"), time("2019-01-02T03:00")]
             finished << [time("2019-01-01T03:30"), time("2019-01-02T04:00"), time("2019-01-01T03:00")]
@@ -50,9 +50,9 @@ class ChargingSpec extends Specification {
     @Unroll
     def "should be charged #charge EUR between #started and #finished if price effects all day long with 0.5EUR per minute"(){
         given: "system has one price defined of 0.5 EUR per minute all day long"
-            chargingStationCalculator.add(defaultPrice)
+            chargingService.add(defaultPrice)
         expect:
-            chargingStationCalculator.calculate(started, finished, defaultCustomer) == charge
+            chargingService.calculate(started, finished, defaultCustomer) == charge
         where:
             started <<  [time("2019-01-01T03:00"), time("2019-01-01T03:00"), time("2019-01-02T03:00")]
             finished << [time("2019-01-01T03:30"), time("2019-01-02T04:00"), time("2019-01-01T03:00")]
@@ -62,9 +62,9 @@ class ChargingSpec extends Specification {
     @Unroll
     def "should be charged #charge EUR between #started and #finished if price effects between 3:30AM and 4:00AM with 1EUR per minute"(){
         given: "system has one price defined of 1 EUR per minute between 3:30AM and 4:00AM"
-            chargingStationCalculator.add(normalPrice)
+            chargingService.add(normalPrice)
         expect:
-            chargingStationCalculator.calculate(started, finished, defaultCustomer) == charge
+            chargingService.calculate(started, finished, defaultCustomer) == charge
         where:
             started <<  [time("2019-01-01T03:00"), time("2019-01-01T03:00"), time("2019-01-02T03:00")]
             finished << [time("2019-01-01T03:30"), time("2019-01-02T04:00"), time("2019-01-01T03:00")]
@@ -74,10 +74,10 @@ class ChargingSpec extends Specification {
     @Unroll
     def "should be charged #charge EUR between #started and #finished if price effects between 3:00AM and 3:30AM with 2EUR per minute and between 3:30AM and 4:00AM with 1EUR per minute"(){
         given: "system have two prices 1 EUR per minute between 3:30AM and 4:00AM and 2 EUR per minute between 3:00AM and 3:30AM"
-            chargingStationCalculator.add(normalPrice)
-            chargingStationCalculator.add(higherPrice)
+            chargingService.add(normalPrice)
+            chargingService.add(higherPrice)
         expect:
-            chargingStationCalculator.calculate(started, finished, defaultCustomer) == charge
+            chargingService.calculate(started, finished, defaultCustomer) == charge
         where:
             started <<  [time("2019-01-01T03:00"), time("2019-01-01T03:00"), time("2019-01-02T03:00")]
             finished << [time("2019-01-01T03:30"), time("2019-01-02T04:00"), time("2019-01-01T03:00")]
@@ -87,11 +87,11 @@ class ChargingSpec extends Specification {
     @Unroll
     def "should be charged #charge EUR between #started and #finished if price effects between 3:00AM and 3:30AM with 2EUR per minute and between 3:30AM and 4:00AM with 1EUR per minute and there is default price of 0.5 EUR in any other time"(){
         given: "system have three prices 1 EUR per minute between 3:30AM and 4:00AM and 2 EUR per minute between 3:00AM and 3:30AM and default one 0.5 EUR in any other time"
-            chargingStationCalculator.add(normalPrice)
-            chargingStationCalculator.add(higherPrice)
-            chargingStationCalculator.add(defaultPrice)
+            chargingService.add(normalPrice)
+            chargingService.add(higherPrice)
+            chargingService.add(defaultPrice)
         expect:
-            chargingStationCalculator.calculate(started, finished, defaultCustomer) == charge
+            chargingService.calculate(started, finished, defaultCustomer) == charge
         where:
             started <<  [time("2019-01-01T03:00"), time("2019-01-01T03:00"), time("2019-01-02T03:00")]
             finished << [time("2019-01-01T03:30"), time("2019-01-02T04:00"), time("2019-01-01T03:00")]
@@ -100,15 +100,15 @@ class ChargingSpec extends Specification {
 
     def "system should apply 10% discount for a VIP customer"(){
         given: "system have one default price of 0.5 EUR all day long"
-            chargingStationCalculator.add(defaultPrice)
+            chargingService.add(defaultPrice)
         and: "charging started at midnight"
             def startedAt = time("2019-01-01T00:00")
         and: "charging finished at midnight the next day"
             def finishedAt = time("2019-01-02T00:00")
         and: "system calculates normal price for a normal customer"
-            def normalCharge = chargingStationCalculator.calculate(startedAt, finishedAt, defaultCustomer)
+            def normalCharge = chargingService.calculate(startedAt, finishedAt, defaultCustomer)
         when: "system calculates normal price for a VIP customer"
-            def discountedCharge = chargingStationCalculator.calculate(startedAt, finishedAt, vipCustomer)
+            def discountedCharge = chargingService.calculate(startedAt, finishedAt, vipCustomer)
         then: "charge for a VIP customer should be 10% lower than charge of a normal customer"
             discountedCharge == normalCharge - (0.1 * normalCharge)
     }
