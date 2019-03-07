@@ -22,7 +22,7 @@ class PriceController {
         return ResponseEntity.accepted().build();
     }
 
-    @ExceptionHandler({PriceOverlapsAnotherPriceException.class})
+    @ExceptionHandler({PriceOverlapsAnotherPriceException.class, PriceInvalidTimeRangeException.class})
     ResponseEntity<ErrorDto> handleError(Exception exception) {
         return ResponseEntity.badRequest()
                 .body(ErrorDto

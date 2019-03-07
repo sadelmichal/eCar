@@ -37,6 +37,10 @@ public class ChargeService {
                     throw new PriceOverlapsAnotherPriceException(p.getEffectSince(), p.getEffectUntil());
                 });
 
+        Optional.of(price)
+                .filter(Price::isValid)
+                .orElseThrow(PriceInvalidTimeRangeException::new);
+
         return priceFactory.from(priceRepository.save(price));
     }
 

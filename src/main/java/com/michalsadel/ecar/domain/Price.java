@@ -27,4 +27,8 @@ class Price {
         requireNonNull(price);
         return effectSince.isBefore(price.effectUntil) && effectUntil.isAfter(price.effectSince);
     }
+
+    boolean isValid() {
+        return effectUntil.isAfter(effectSince);
+    }
 }

@@ -1,6 +1,6 @@
 package com.michalsadel.ecar.domain
 
-
+import com.michalsadel.ecar.exceptions.PriceInvalidTimeRangeException
 import com.michalsadel.ecar.exceptions.PriceOverlapsAnotherPriceException
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -69,5 +69,12 @@ class PriceSpec extends Specification implements ServiceSpec {
             starts      |finishes
             "16:00"     |"17:00"
             "07:00"     |"08:00"
+    }
+
+    def "should throw an exception when price definition start time is greater than the end time"(){
+        when:
+            chargeService.add(createPrice("04:00", "03:00"))
+        then:
+            thrown(PriceInvalidTimeRangeException)
     }
 }
