@@ -19,6 +19,7 @@ jacoco {
 jacocoTestReport {
     reports {
         xml.enabled true
+        html.enabled = true
     }
 }
 
@@ -37,6 +38,8 @@ test {
         events "passed", "skipped", "failed"
     }
 }
+
+check.dependsOn jacocoTestReport
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
