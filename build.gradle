@@ -8,9 +8,13 @@ plugins {
 apply plugin: 'io.spring.dependency-management'
 
 group = 'com.sadelmichal'
-version = '1.0'
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
+
+ext {
+    swaggerVersion = '2.9.2'
+    spockVersion = '1.2-groovy-2.5'
+}
 
 jacoco {
     toolVersion = "0.8.2"
@@ -45,12 +49,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'io.springfox:springfox-swagger2:2.9.2'
-    implementation 'io.springfox:springfox-swagger-ui:2.9.2'
+    implementation "io.springfox:springfox-swagger2:${swaggerVersion}"
+    implementation "io.springfox:springfox-swagger-ui:${swaggerVersion}"
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation group: 'org.spockframework', name: 'spock-core', version: '1.2-groovy-2.5'
-    testImplementation group: 'org.spockframework', name: 'spock-spring', version: '1.2-groovy-2.5'
+    testImplementation "org.spockframework:spock-core:${spockVersion}"
+    testImplementation "org.spockframework:spock-spring:${spockVersion}"
 }
