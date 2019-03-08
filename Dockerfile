@@ -13,4 +13,6 @@ COPY build/libs/$APP.jar .
 
 RUN ln -s $APP.jar app
 
+EXPOSE 8080
+
 CMD ["/bin/sh", "-c", "java -Duser.timezone=Europe/Warsaw -Xmx512m -jar /opt/app --spring.profiles.active=$SPRING_PROFILES_ACTIVE"]
