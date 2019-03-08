@@ -33,6 +33,6 @@ class Price {
     }
 
     boolean isPerMinuteValid() {
-        return !(perMinute.signum() == -1);
+        return perMinute.signum() != -1;
     }
 }

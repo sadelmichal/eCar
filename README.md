@@ -7,16 +7,22 @@
 
 eCar company is going to introduce new way pricing in their new, successful backoffice supporting electric vehicles charging network. 
 
-# Requirements
+### Requirements
+- [x] Ability to define and calculate a price via API.  
+- [x] A price definition will contain price per minute and can be defined for specific duration, e.g. one price before noon and different one afternoon 
+- [x] A calculation input will contain start and end datetime of charging process and customer id 
+- [x] For VIP customers we will grant 10% discount 
+- [x] An application should be able to be launched from command line with single command like "java –jar...." 
+- [x] A solution should require no additional software to be installed except for JRE 8
 
-* Ability to define and calculate a price via API.  
 
-* A price definition will contain price per minute and can be defined for specific duration, e.g. one price before noon and different one afternoon 
+### Assumptions
+- Price definition **can** have time range when can be applied
+- If price definition does not have a time specified it is assumed it is applied all day long *00:00 - 23:59:59* and it became default price
+- Only one *default price* can be defined
+- If price definition is fully defined (has time range) then it has priority before default one
+- System rejects a new fully defined price definition if there is one in the system already which overlaps with a new one
+- System is in the same time zone than the customer
 
-* A calculation input will contain start and end datetime of charging process and customer id 
-
-* For VIP customers we will grant 10% discount 
-
-* An application should be able to be launched from command line with single command like "java –jar...." 
-
-* A solution should require no additional software to be installed except for JRE 8 
+### Deployment
+System is continually delivered to *Azure*. It can be reached at [eCar](https://ecar-sadel.azurewebsites.net/)               

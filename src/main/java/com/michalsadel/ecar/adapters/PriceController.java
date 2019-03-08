@@ -2,7 +2,6 @@ package com.michalsadel.ecar.adapters;
 
 import com.michalsadel.ecar.domain.*;
 import com.michalsadel.ecar.dto.*;
-import com.michalsadel.ecar.exceptions.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,12 +21,5 @@ class PriceController {
         return ResponseEntity.accepted().build();
     }
 
-    @ExceptionHandler({PriceOverlapsAnotherPriceException.class, PriceInvalidTimeRangeException.class})
-    ResponseEntity<ErrorDto> handleError(Exception exception) {
-        return ResponseEntity.badRequest()
-                .body(ErrorDto
-                        .builder()
-                        .error(exception.getLocalizedMessage())
-                        .build());
-    }
+
 }
