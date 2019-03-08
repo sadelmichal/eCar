@@ -4,7 +4,7 @@ import lombok.*;
 
 import java.math.*;
 
-@Data
+@Getter
 @Builder
 public class ChargeDto {
     private BigDecimal charge;

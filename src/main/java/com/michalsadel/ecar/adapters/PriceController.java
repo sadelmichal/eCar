@@ -9,17 +9,21 @@ import javax.validation.*;
 
 @RestController
 class PriceController {
-    private final ChargeService chargeService;
+    private final PriceEntryPoint priceEntryPoint;
 
-    public PriceController(ChargeService chargeService) {
-        this.chargeService = chargeService;
+    PriceController(PriceEntryPoint priceEntryPoint) {
+        this.priceEntryPoint = priceEntryPoint;
     }
 
     @PostMapping("/price")
     ResponseEntity addPrice(@Valid @RequestBody PriceDto priceDto) {
-        chargeService.add(priceDto);
+        priceEntryPoint.add(priceDto);
         return ResponseEntity.accepted().build();
     }
 
-
+    @DeleteMapping("/prices")
+    ResponseEntity removePrices() {
+        priceEntryPoint.removeAll();
+        return ResponseEntity.ok().build();
+    }
 }

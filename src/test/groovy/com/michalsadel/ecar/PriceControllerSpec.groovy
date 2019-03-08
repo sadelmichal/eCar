@@ -1,12 +1,14 @@
 package com.michalsadel.ecar
 
-import com.michalsadel.ecar.domain.ChargeService
+import com.michalsadel.ecar.domain.CustomerEntryPoint
 import com.michalsadel.ecar.domain.ServiceSpec
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.annotation.DirtiesContext
+import org.springframework.test.annotation.Rollback
 import org.springframework.test.web.servlet.ResultActions
+import org.springframework.transaction.annotation.Transactional
 
 import static org.hamcrest.Matchers.containsString
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
@@ -14,10 +16,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @SpringBootTest(classes = [Application])
+@Transactional
+@Rollback
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class PriceControllerSpec extends MvcSpec implements ServiceSpec {
     @Autowired
-    private ChargeService chargeService
+    private CustomerEntryPoint chargeService
 
     def "should default price be accepted and creation of another default price rejected"() {
         when: "post with default price of 1EUR per minute is made to /price"

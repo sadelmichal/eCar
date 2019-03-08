@@ -11,10 +11,13 @@ import static java.util.Objects.requireNonNull;
 @Entity
 @Builder
 @Getter(AccessLevel.PACKAGE)
+@NoArgsConstructor
+@AllArgsConstructor
 class Price {
     @Id
     @Setter(AccessLevel.PACKAGE)
-    private String id;
+    @GeneratedValue
+    private Long id;
     private BigDecimal perMinute;
     private LocalTime effectSince;
     private LocalTime effectUntil;

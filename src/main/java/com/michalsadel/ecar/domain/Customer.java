@@ -6,11 +6,13 @@ import javax.persistence.*;
 
 @Entity
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter(AccessLevel.PACKAGE)
 class Customer {
     @Id
+    @GeneratedValue
+    @Setter(AccessLevel.PACKAGE)
     private Long id;
-
-    CustomerType customerType() {
-        return id == 42 ? CustomerType.VIP : CustomerType.DEFAULT;
-    }
+    private CustomerType customerType;
 }

@@ -8,7 +8,6 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 
 trait ServiceSpec {
-    ChargeService chargeService = new TestConfiguration().chagrgeService()
 
     private static LocalTime time(String time) {
         return LocalTime.parse(time)

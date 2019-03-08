@@ -3,6 +3,7 @@ package com.michalsadel.ecar.domain;
 import java.math.*;
 
 interface DiscountStrategy {
-    BigDecimal discount(BigDecimal chargePrice);
-
+    default BigDecimal discount(BigDecimal charge){
+        return charge;
+    }
 }

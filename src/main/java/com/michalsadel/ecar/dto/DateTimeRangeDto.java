@@ -8,7 +8,7 @@ import java.time.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
 public class DateTimeRangeDto {
     @NotNull
     private LocalDateTime start;
