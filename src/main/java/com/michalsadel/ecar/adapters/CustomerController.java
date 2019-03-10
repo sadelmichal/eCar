@@ -1,38 +1,46 @@
 package com.michalsadel.ecar.adapters;
 
-import com.michalsadel.ecar.domain.*;
-import com.michalsadel.ecar.dto.*;
+import com.michalsadel.ecar.charge.dto.*;
+import com.michalsadel.ecar.customer.*;
+import com.michalsadel.ecar.customer.dto.*;
+import com.michalsadel.ecar.price.dto.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.*;
 import java.math.*;
+import java.util.*;
 
 @RestController
 class CustomerController {
-    private final CustomerEntryPoint customerEntryPoint;
+    private final CustomerFacade customerFacade;
 
-    CustomerController(CustomerEntryPoint customerEntryPoint) {
-        this.customerEntryPoint = customerEntryPoint;
+    CustomerController(CustomerFacade customerFacade) {
+        this.customerFacade = customerFacade;
     }
 
     @PostMapping("/customer/{customerId}/charge")
     @ResponseBody
     ChargeDto charge(@PathVariable Long customerId, @RequestBody @Valid DateTimeRangeDto dateTimeRangeDto) {
-        final BigDecimal charge = customerEntryPoint.charge(dateTimeRangeDto.getStart(), dateTimeRangeDto.getFinish(), customerId);
+        final BigDecimal charge = customerFacade.charge(dateTimeRangeDto.getStart(), dateTimeRangeDto.getFinish(), customerId);
         return ChargeDto.builder().charge(charge).build();
     }
 
     @PostMapping("/customer")
     @ResponseBody
     CustomerDto addCustomer(@Valid @RequestBody CustomerDto customerDto) {
-        return customerEntryPoint.add(customerDto);
+        return customerFacade.add(customerDto);
     }
 
     @DeleteMapping("/customers")
     ResponseEntity removeCustomers() {
-        customerEntryPoint.removeAll();
+        customerFacade.removeAll();
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/customers")
+    List<CustomerDto> getCustomers() {
+        return customerFacade.findAll();
     }
 
 }

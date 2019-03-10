@@ -11,4 +11,4 @@ togglz:
     enabled: true
     path: /togglz
     secured: false
-  feature-enums: com.michalsadel.ecar.domain.LinearCalculationAlgorithmFeature
+  feature-enums: com.michalsadel.ecar.charge.OverlapBasedCalculationFeature

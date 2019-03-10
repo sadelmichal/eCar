@@ -1,8 +1,8 @@
 package com.michalsadel.ecar.infrastructure.web;
 
 import com.fasterxml.jackson.databind.exc.*;
-import com.michalsadel.ecar.exceptions.*;
 import com.michalsadel.ecar.infrastructure.dto.*;
+import com.michalsadel.ecar.price.exceptions.*;
 import org.springframework.core.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
