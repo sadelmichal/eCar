@@ -17,7 +17,7 @@ class PriceValidator {
                 .filter(p -> p.overlaps(price))
                 .findFirst()
                 .ifPresent(p -> {
-                    throw new PriceOverlapsAnotherPriceException(p.getEffectSince(), p.getEffectUntil());
+                    throw new PriceOverlapsAnotherPriceException(p.toString());
                 });
 
         Optional.of(price)

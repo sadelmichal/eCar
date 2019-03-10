@@ -14,6 +14,8 @@ targetCompatibility = '1.8'
 ext {
     swaggerVersion = '2.9.2'
     spockVersion = '1.2-groovy-2.5'
+    jodaVersion = '2.10.1'
+    togglzVersion = '2.6.1.Final'
 }
 
 jacoco {
@@ -51,7 +53,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation('com.h2database:h2')
     implementation "io.springfox:springfox-swagger2:${swaggerVersion}"
+    implementation "org.togglz:togglz-spring-boot-starter:${togglzVersion}"
+    implementation "org.togglz:togglz-console:${togglzVersion}"
     implementation "io.springfox:springfox-swagger-ui:${swaggerVersion}"
+    compile "joda-time:joda-time:${jodaVersion}"
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'

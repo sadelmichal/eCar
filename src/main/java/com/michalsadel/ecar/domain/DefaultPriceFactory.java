@@ -22,17 +22,4 @@ class DefaultPriceFactory implements PriceFactory {
                 .effectUntil(Optional.ofNullable(effectedIn.getFinishesAt()).orElse(LocalTime.MAX))
                 .build();
     }
-
-    @Override
-    public PriceDto from(Price price) {
-        requireNonNull(price);
-        return PriceDto.builder()
-                .perMinute(price.getPerMinute())
-                .effectedIn(TimeRangeDto.builder()
-                        .startsAt(price.getEffectSince())
-                        .finishesAt(price.getEffectUntil())
-                        .build())
-                .defaultInSystem(price.isDefaultPrice())
-                .build();
-    }
 }

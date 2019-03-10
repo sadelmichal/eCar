@@ -22,14 +22,10 @@ public class CustomerEntryPoint {
     public CustomerDto add(CustomerDto customerDto) {
         requireNonNull(customerDto);
         Customer customer = Customer.builder()
-                .id(customerDto.getId())
                 .customerType(CustomerType.valueOf(customerDto.getCustomerType().name()))
                 .build();
         customer = customerRepository.save(customer);
-        return CustomerDto.builder()
-                .customerType(CustomerTypeDto.valueOf(customer.getCustomerType().name()))
-                .id(customer.getId())
-                .build();
+        return customer.toDto();
     }
 
     public void removeAll() {
@@ -41,10 +37,7 @@ public class CustomerEntryPoint {
         final BigDecimal charge = chargeCalculator.calculate(startTime, finishTime);
         Customer customer = customerRepository
                 .findById(customerId)
-                .orElse(Customer
-                        .builder()
-                        .customerType(CustomerType.DEFAULT)
-                        .build());
-        return DiscountContext.from(customer.getCustomerType()).apply(charge);
+                .orElse(Customer.defaultCustomer());
+        return customer.discount(charge);
     }
 }

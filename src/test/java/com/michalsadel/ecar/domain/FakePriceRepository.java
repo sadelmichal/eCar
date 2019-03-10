@@ -16,7 +16,7 @@ class FakePriceRepository implements PriceRepository {
     @Override
     public Price save(Price price) {
         requireNonNull(price);
-        price.setId(Long.valueOf(map.size()));
+        ReflectionUtilities.setId(price, (long) map.size());
         map.put(price.getId(), price);
         return price;
     }

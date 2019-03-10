@@ -10,7 +10,7 @@ import spock.lang.Unroll
 import java.time.LocalTime
 
 class PriceSpec extends Specification implements ServiceSpec {
-    PriceEntryPoint priceService = new TestConfiguration().priceService()
+    PriceEntryPoint priceService = new TestConfiguration(MapBasedCalculator).priceService()
 
     def "should have a price with time span extended all day long"(){
         given: "default price without time span"

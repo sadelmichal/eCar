@@ -17,7 +17,7 @@ class FakeCustomerRepository implements CustomerRepository {
     @Override
     public Customer save(Customer customer) {
         requireNonNull(customer);
-        customer.setId(Optional.ofNullable(customer.getId()).orElse((long) map.size()));
+        ReflectionUtilities.setId(customer, (long) map.size());
         map.put(customer.getId(), customer);
         return customer;
 

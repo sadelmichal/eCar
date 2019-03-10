@@ -40,7 +40,7 @@ class PriceControllerSpec extends MvcSpec implements ServiceSpec {
         then: "price is rejected"
             secondPrice
                     .andExpect(status().isBadRequest())
-                    .andExpect(jsonPath('$.error', containsString("Price provided overlaps price defined in the system between")))
+                    .andExpect(jsonPath('$.error', containsString("Price provided overlaps price defined in the system")))
     }
     def "should not be allowed to partially define time range in price definition"(){
         when: "another price definition is added without finishesAt"

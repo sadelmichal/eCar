@@ -5,4 +5,10 @@ logging:
   level:
     root: info
     org.springframework.web: debug
-
+togglz:
+  console:
+    use-management-port: false
+    enabled: true
+    path: /togglz
+    secured: false
+  feature-enums: com.michalsadel.ecar.domain.LinearCalculationAlgorithmFeature

@@ -21,7 +21,11 @@ eCar company is going to introduce new way pricing in their new, successful back
  - Only one *default price* can be defined
  - If price definition is fully defined (has time range) then it has priority before default one
  - System rejects a price definition if there is already price in the system which overlaps with the new one
+ - We always want to earn money, so if there is no customer in our repository we treat him as standard one
  - System is in the same time zone than the customer
+ 
+## Algorithms
+There are two types of charge computation algorithms. One creates a daily map with prices. The other one computes a charge using joda overlaps method. Default is the second one. You can easily change it using [Togglz console](https://ecar-sadel.azurewebsites.net/togglz)   
 
 ## Additional methods
  - Price and customers can be deleted
@@ -29,3 +33,4 @@ eCar company is going to introduce new way pricing in their new, successful back
   
 ## Deployment
 System is continually delivered to *Azure*. It can be reached at [eCar](https://ecar-sadel.azurewebsites.net/)               
+It has [SwaggerUI](https://ecar-sadel.azurewebsites.net/swagger-ui.html) for a user friendly testing and [Togglz console](https://ecar-sadel.azurewebsites.net/togglz) to easily change calculation algorithm. 

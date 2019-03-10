@@ -21,7 +21,8 @@ public class PriceEntryPoint {
         requireNonNull(priceDto);
         Price price = priceFactory.from(priceDto);
         priceValidator.validate(price);
-        return priceFactory.from(priceRepository.save(price));
+        price = priceRepository.save(price);
+        return price.toDto();
     }
 
     public void removeAll() {
