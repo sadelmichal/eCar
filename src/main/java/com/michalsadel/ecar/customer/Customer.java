@@ -7,9 +7,10 @@ import java.math.*;
 
 @javax.persistence.Entity
 @Builder
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 class Customer extends Entity<Long> {
-    private final CustomerType customerType;
+    private CustomerType customerType;
 
     BigDecimal discount(BigDecimal charge) {
         return customerType.getChargeStrategy().apply(charge);

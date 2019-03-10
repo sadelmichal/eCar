@@ -11,12 +11,13 @@ import static java.util.Objects.*;
 
 @javax.persistence.Entity
 @Builder
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
 class Price extends Entity<Long> {
-    private final BigDecimal perMinute;
-    private final LocalTime effectSince;
-    private final LocalTime effectUntil;
+    private BigDecimal perMinute;
+    private LocalTime effectSince;
+    private LocalTime effectUntil;
 
     boolean isDefaultPrice() {
         return effectSince.equals(LocalTime.MIDNIGHT) && effectUntil.truncatedTo(ChronoUnit.SECONDS).equals(LocalTime.MAX.truncatedTo(ChronoUnit.SECONDS));
