@@ -21,9 +21,7 @@ class OverlapBasedCalculator implements ChargeCalculator {
         requireNonNull(priceDto);
         requireNonNull(priceDto.getEffectedIn());
         TimeRangeDto effectedIn = priceDto.getEffectedIn();
-        org.joda.time.LocalDateTime effectSince = org.joda.time.LocalDateTime.parse(effectedIn.getStartsAt().atDate(date).toString());
-        org.joda.time.LocalDateTime effectUntil = org.joda.time.LocalDateTime.parse(effectedIn.getFinishesAt().atDate(date).toString());
-        return new Interval(effectSince.toDateTime(), effectUntil.toDateTime());
+        return new Interval(converter.convert(effectedIn.getStartsAt(), date), converter.convert(effectedIn.getFinishesAt(), date));
     }
 
     private Optional<PriceDto> defaultPrice(final List<PriceDto> prices) {
@@ -56,12 +54,12 @@ class OverlapBasedCalculator implements ChargeCalculator {
         if (defaultPrice.isPresent()) {
             charge = applyDefaultPrice(chargeDuration, defaultPrice.get());
         }
-        prices = prices.stream().filter(price -> !price.getDefaultInSystem()).collect(Collectors.toList());
+        List<PriceDto> nonDefaultPrices = prices.stream().filter(price -> !price.getDefaultInSystem()).collect(Collectors.toList());
 
         Interval chargeInterval = new Interval(converter.convert(startsAt), converter.convert(finishesAt));
 
-        for (int i = 0; i < (Duration.between(startsAt, finishesAt).toDays() + 1) * prices.size(); i++) {
-            PriceDto price = prices.get((i) % (prices.size()));
+        for (int i = 0; i < (Duration.between(startsAt, finishesAt).toDays() + 1) * nonDefaultPrices.size(); i++) {
+            PriceDto price = nonDefaultPrices.get((i) % (nonDefaultPrices.size()));
             Interval priceInterval = intervalAtDate(startsAt.toLocalDate(), price);
             if (chargeInterval.overlaps(priceInterval)) {
                 Interval intersectionInterval = chargeInterval.overlap(priceInterval);
