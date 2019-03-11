@@ -4,9 +4,11 @@ services:
   - docker
 
 script:
-  - docker build -t msadel/ecar --build-arg APP=eCar .
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push msadel/ecar
+  - if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+     docker build -t msadel/ecar --build-arg APP=eCar .
+     echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+     docker push msadel/ecar
+    fi
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
