@@ -3,6 +3,9 @@ language: java
 services:
   - docker
 
+install:
+  - ./gradlew clean build
+
 script:
   - >
     if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
