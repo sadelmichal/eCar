@@ -45,6 +45,7 @@ class OverlapBasedCalculator implements ChargeCalculator {
 
     @Override
     public BigDecimal calculate(LocalDateTime startsAt, LocalDateTime finishesAt, List<PriceDto> prices) {
+        log.info("Calculated using {}", getClass().getSimpleName());
         BigDecimal charge = BigDecimal.ZERO;
         Duration chargeDuration = Duration.between(startsAt, finishesAt);
         if (durationInvalid(chargeDuration)) {
@@ -71,7 +72,6 @@ class OverlapBasedCalculator implements ChargeCalculator {
             }
 
         }
-        log.info("Calculated using {}", getClass().getSimpleName());
         return charge;
     }
 }

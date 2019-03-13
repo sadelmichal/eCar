@@ -2,16 +2,15 @@ package com.michalsadel.ecar.charge;
 
 import com.michalsadel.ecar.price.dto.*;
 import org.slf4j.*;
+import org.springframework.core.convert.*;
 
 import java.math.*;
 import java.time.*;
-import java.time.temporal.*;
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
 import static java.math.BigDecimal.*;
-import static java.util.Objects.*;
 
 class MapBasedCalculator implements ChargeCalculator {
     private static final Logger log = LoggerFactory.getLogger(MapBasedCalculator.class);
@@ -20,40 +19,42 @@ class MapBasedCalculator implements ChargeCalculator {
     private static final int MINUTES_PER_DAY = MINUTES_PER_HOUR * HOURS_PER_DAY;
 
     private final Map<Integer, BigDecimal> defaultPriceMapOfDay;
+    private final ConversionService conversionService;
 
-    public MapBasedCalculator() {
+    public MapBasedCalculator(ConversionService conversionService) {
+        this.conversionService = conversionService;
         defaultPriceMapOfDay = Collections.unmodifiableMap(
                 IntStream.range(0, MINUTES_PER_DAY)
                         .boxed()
                         .collect(Collectors.toMap(Function.identity(), value -> ZERO)));
     }
 
-    private int getMinuteOfDay(LocalTime time) {
-        requireNonNull(time);
-        return time.get(ChronoField.MINUTE_OF_DAY);
+    private Integer getMinuteOfDay(LocalDateTime dateTime) {
+        return conversionService.convert(dateTime, Integer.class);
     }
 
-    private int getMinuteOfDay(LocalDateTime time) {
-        requireNonNull(time);
-        return time.get(ChronoField.MINUTE_OF_DAY);
+    private Integer minuteOfDayUntilPriceHasAnEffect(PriceDto price) {
+        return conversionService.convert(price.getEffectedIn().getFinishesAt(), Integer.class);
+    }
+
+    private Integer minuteOfDaySincePriceHasAnEffect(PriceDto price) {
+        return conversionService.convert(price.getEffectedIn().getStartsAt(), Integer.class);
+    }
+
+    private int minuteKey(LocalDateTime startsAt, int minute) {
+        return (getMinuteOfDay(startsAt) + minute) % (MINUTES_PER_DAY - 1);
     }
 
     private Map<Integer, BigDecimal> createPriceMap(List<PriceDto> prices) {
-        final Map<Integer, BigDecimal> priceMapOfADay = prices.stream()
+        return Stream.concat(defaultPriceMapOfDay.entrySet().stream(), prices.stream()
                 .sorted(Comparator.comparing(PriceDto::getDefaultInSystem).reversed())
                 .map(price -> IntStream
-                        .range(
-                                getMinuteOfDay(price.getEffectedIn().getStartsAt()),
-                                getMinuteOfDay(price.getEffectedIn().getFinishesAt()))
-                        .mapToObj(minute -> new AbstractMap.SimpleImmutableEntry<>(minute, price.getPerMinute()))
+                        .range(minuteOfDaySincePriceHasAnEffect(price), minuteOfDayUntilPriceHasAnEffect(price))
+                        .mapToObj(minute -> new AbstractMap.SimpleEntry<>(minute, price.getPerMinute()))
                 )
-                .flatMap(Function.identity())
-                .collect(Collectors.toMap(AbstractMap.SimpleImmutableEntry::getKey, AbstractMap.SimpleImmutableEntry::getValue, (price1, price2) -> price2));
-
-        return Stream.concat(defaultPriceMapOfDay.entrySet().stream(), priceMapOfADay.entrySet().stream())
+                .flatMap(Function.identity()))
                 .sorted(Map.Entry.comparingByKey())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (price1, price2) -> price2));
-
     }
 
     @Override
@@ -61,7 +62,7 @@ class MapBasedCalculator implements ChargeCalculator {
         log.info("Calculated using {}", getClass().getSimpleName());
         final Map<Integer, BigDecimal> priceMap = createPriceMap(prices);
         return LongStream.range(0, Duration.between(startsAt, finishesAt).toMinutes())
-                .mapToObj(minute -> priceMap.get((getMinuteOfDay(startsAt) + (int) minute) % (MINUTES_PER_DAY - 1)))
+                .mapToObj(minute -> priceMap.get(minuteKey(startsAt, (int) minute)))
                 .reduce(ZERO, BigDecimal::add);
     }
 }

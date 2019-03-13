@@ -1,14 +1,15 @@
 package com.michalsadel.ecar.charge;
 
 import org.springframework.context.annotation.*;
+import org.springframework.core.convert.*;
 import org.togglz.core.manager.*;
 import org.togglz.spring.proxy.*;
 
 @Configuration
 class ChargeConfiguration {
     @Bean
-    MapBasedCalculator mapBasedChargeCalculator() {
-        return new MapBasedCalculator();
+    MapBasedCalculator mapBasedChargeCalculator(ConversionService conversionService) {
+        return new MapBasedCalculator(conversionService);
     }
 
     @Bean

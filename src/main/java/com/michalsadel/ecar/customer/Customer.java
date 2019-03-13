@@ -13,7 +13,7 @@ class Customer extends Entity<Long> {
     private CustomerType customerType;
 
     BigDecimal discount(BigDecimal charge) {
-        return customerType.getChargeStrategy().apply(charge);
+        return customerType.getDiscount().apply(charge);
     }
 
     static Customer defaultCustomer() {
