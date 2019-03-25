@@ -1,5 +1,6 @@
 package com.michalsadel.ecar.price;
 
+import com.michalsadel.ecar.Entity;
 import com.michalsadel.ecar.price.dto.*;
 import lombok.*;
 

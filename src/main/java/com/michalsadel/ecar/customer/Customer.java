@@ -1,5 +1,6 @@
 package com.michalsadel.ecar.customer;
 
+import com.michalsadel.ecar.Entity;
 import com.michalsadel.ecar.customer.dto.*;
 import lombok.*;
 

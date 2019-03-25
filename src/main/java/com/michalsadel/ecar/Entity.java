@@ -1,12 +1,12 @@
-package com.michalsadel.ecar.customer;
+package com.michalsadel.ecar;
 
 import lombok.*;
 
 import javax.persistence.*;
 
-@Getter(AccessLevel.PROTECTED)
+@Getter(AccessLevel.PUBLIC)
 @MappedSuperclass
-abstract class Entity<T> {
+public abstract class Entity<T> {
     @Id
     @GeneratedValue
     private T id;

@@ -11,8 +11,12 @@ import static java.util.Objects.*;
 @Transactional
 public class PriceFacade {
     private final PriceRepository priceRepository;
-    private final PriceFactory priceFactory;
+    private PriceFactory priceFactory;
     private final PriceValidator priceValidator;
+
+    public void setPriceFactory(PriceFactory priceFactory) {
+        this.priceFactory = priceFactory;
+    }
 
     PriceFacade(PriceRepository priceRepository, PriceFactory priceFactory, PriceValidator priceValidator) {
         this.priceRepository = priceRepository;

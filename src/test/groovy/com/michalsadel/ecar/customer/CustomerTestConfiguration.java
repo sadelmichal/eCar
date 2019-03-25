@@ -7,7 +7,7 @@ class CustomerTestConfiguration {
     private final CustomerRepository customerRepository;
 
     CustomerTestConfiguration() {
-        this.customerRepository = new FakeCustomerRepository();
+        customerRepository = new FakeCustomerRepository();
     }
 
     CustomerFacade customerFacade(PriceFacade priceFacade, ChargeFacade chargeFacade) {

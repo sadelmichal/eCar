@@ -1,6 +1,7 @@
 package com.michalsadel.ecar.price
 
 import com.michalsadel.ecar.ServiceSpec
+import com.michalsadel.ecar.price.dto.PriceDto
 import com.michalsadel.ecar.price.exceptions.PriceInvalidTimeRangeException
 import com.michalsadel.ecar.price.exceptions.PriceIsBelowZeroException
 import com.michalsadel.ecar.price.exceptions.PriceOverlapsAnotherPriceException
@@ -11,6 +12,18 @@ import java.time.LocalTime
 
 class PriceSpec extends Specification implements ServiceSpec {
     PriceFacade priceFacade = new PriceTestConfiguration().priceFacade()
+
+    def "just check mock"(){
+        given:
+            def price = createDefaultPrice()
+            PriceFactory priceFactory = Mock()
+            priceFactory.from(_ as PriceDto) >> Price.builder().perMinute(BigDecimal.ONE).effectSince(LocalTime.now()).effectUntil(LocalTime.now()).build()
+            priceFacade.setPriceFactory(priceFactory)
+        when:
+            priceFacade.add(price)
+        then:
+         1 == 1
+    }
 
     def "should have a price with time span extended all day long"(){
         given: "default price without time span"
