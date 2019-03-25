@@ -19,7 +19,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(classes = [Application])
 @Transactional
-@Rollback
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class PriceControllerSpec extends MvcSpec implements ServiceSpec {
     @Autowired
