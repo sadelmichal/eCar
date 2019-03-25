@@ -32,5 +32,5 @@ There are two types of charge computation algorithms. One creates a daily map wi
  - Price and customers can be listed
   
 ## Deployment
-System is continually delivered to *Azure*. It can be reached at [eCar](https://ecar-sadel.azurewebsites.net/)               
+~~System is continually delivered to *Azure*. It can be reached at [eCar](https://ecar-sadel.azurewebsites.net/)~~
 It has [SwaggerUI](https://ecar-sadel.azurewebsites.net/swagger-ui.html) for a user friendly testing and [Togglz console](https://ecar-sadel.azurewebsites.net/togglz) to easily change calculation algorithm. 
