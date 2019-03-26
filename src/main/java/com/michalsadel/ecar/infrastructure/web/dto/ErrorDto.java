@@ -1,4 +1,4 @@
-package com.michalsadel.ecar.infrastructure.dto;
+package com.michalsadel.ecar.infrastructure.web.dto;
 
 import lombok.*;
 
