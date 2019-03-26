@@ -1,4 +1,4 @@
-package com.michalsadel.ecar.adapters
+package com.michalsadel.ecar.infrastructure.web
 
 import com.michalsadel.ecar.Application
 import com.michalsadel.ecar.ServiceSpec
@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.annotation.DirtiesContext
-import org.springframework.test.annotation.Rollback
 import org.springframework.test.web.servlet.ResultActions
 import org.springframework.transaction.annotation.Transactional
 

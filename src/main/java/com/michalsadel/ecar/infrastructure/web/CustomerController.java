@@ -1,4 +1,4 @@
-package com.michalsadel.ecar.adapters;
+package com.michalsadel.ecar.infrastructure.web;
 
 import com.michalsadel.ecar.charge.dto.*;
 import com.michalsadel.ecar.customer.*;

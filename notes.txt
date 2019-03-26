@@ -1,0 +1,41 @@
+in intelij.sh - export XMODIFIERS = "" problem z ctrl + shift + u
+
+
+Navigate to (ctrl+n) - wildcards possible *, Only capital letters (e.g. CustomerConfig - CC)
+Symbol lookup (ctrl+alt+shift+n) - methods
+Lookup all (shift+shift)
+
+Autoscroll to source (project (alt+1) and button settings at the top
+
+New in this directory (Ctrl + Alt + N)
+Scratch file (Ctrl + Alt + Shift + N)
+
+Autocomplete command (ctrl + shift + enter) np srednik
+
+Hide all windows (Ctrl + Shift + F12)
+
+Multiple cursors (alt + j) when selected word
+Select all occurrences (ctrl + alt + shift + j)
+
+Indentation ( ctrl + alt + i) on selected part no need to reformat
+
+Use code cleanup
+
+Apply code style when method is selected (alt enter) - gives u a preview
+
+Inject language (is write json, inteli auto do this) (alt + enter)
+
+Cyclic expand word (Alt + slash) - it completes by word matching
+
+Go to declaration (Ctrl + B)
+
+Go to implementation (Ctrl + Alt + B)
+
+Type hierarchy (Ctrl + H)
+
+Call hierarchy (Ctrl + Alt + H)
+
+Navigation popup (Alt + Home)
+
+
+

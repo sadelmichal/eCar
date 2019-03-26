@@ -51,7 +51,7 @@ class MapBasedCalculator implements ChargeCalculator {
                 .map(price -> IntStream
                         .range(minuteOfDaySincePriceHasAnEffect(price), minuteOfDayUntilPriceHasAnEffect(price))
                         .mapToObj(minute -> new AbstractMap.SimpleEntry<>(minute, price.getPerMinute()))
-                )
+                    )
                 .flatMap(Function.identity()))
                 .sorted(Map.Entry.comparingByKey())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (price1, price2) -> price2));
