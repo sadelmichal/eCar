@@ -12,7 +12,7 @@ class PriceConfiguration {
 
     @Bean
     PriceValidator priceValidator(PriceRepository priceRepository) {
-        return new PriceValidator(priceRepository);
+        return PriceValidatorFactory.instanceOf(priceRepository);
     }
 
     @Bean

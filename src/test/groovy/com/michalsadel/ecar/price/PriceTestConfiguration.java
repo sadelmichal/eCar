@@ -8,6 +8,6 @@ public class PriceTestConfiguration {
     }
 
     public PriceFacade priceFacade() {
-        return new PriceFacade(priceRepository, new DefaultPriceFactory(), new PriceValidator(priceRepository));
+        return new PriceFacade(priceRepository, new DefaultPriceFactory(), PriceValidatorFactory.instanceOf(priceRepository));
     }
 }
