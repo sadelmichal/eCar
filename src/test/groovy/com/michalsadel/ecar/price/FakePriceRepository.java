@@ -2,10 +2,11 @@ package com.michalsadel.ecar.price;
 
 import com.michalsadel.ecar.utils.ReflectionUtilities;
 
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
-import static java.util.Objects.*;
+import static java.util.Objects.requireNonNull;
 
 public class FakePriceRepository implements PriceRepository {
     private ConcurrentHashMap<Long, Price> map = new ConcurrentHashMap<>();

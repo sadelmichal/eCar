@@ -1,27 +1,27 @@
 package com.michalsadel.ecar.price;
 
-import com.michalsadel.ecar.price.dto.*;
-import org.springframework.transaction.annotation.*;
+import com.michalsadel.ecar.price.dto.PriceDto;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import static java.util.Objects.*;
+import static java.util.Objects.requireNonNull;
 
 @Transactional
 public class PriceFacade {
     private final PriceRepository priceRepository;
-    private PriceFactory priceFactory;
     private final PriceValidator priceValidator;
-
-    public void setPriceFactory(PriceFactory priceFactory) {
-        this.priceFactory = priceFactory;
-    }
+    private PriceFactory priceFactory;
 
     PriceFacade(PriceRepository priceRepository, PriceFactory priceFactory, PriceValidator priceValidator) {
         this.priceRepository = priceRepository;
         this.priceFactory = priceFactory;
         this.priceValidator = priceValidator;
+    }
+
+    public void setPriceFactory(PriceFactory priceFactory) {
+        this.priceFactory = priceFactory;
     }
 
     public PriceDto add(PriceDto priceDto) {

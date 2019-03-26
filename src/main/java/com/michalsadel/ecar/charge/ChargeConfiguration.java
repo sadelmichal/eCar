@@ -1,9 +1,10 @@
 package com.michalsadel.ecar.charge;
 
-import org.springframework.context.annotation.*;
-import org.springframework.core.convert.*;
-import org.togglz.core.manager.*;
-import org.togglz.spring.proxy.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.convert.ConversionService;
+import org.togglz.core.manager.FeatureManager;
+import org.togglz.spring.proxy.FeatureProxyFactoryBean;
 
 @Configuration
 class ChargeConfiguration {

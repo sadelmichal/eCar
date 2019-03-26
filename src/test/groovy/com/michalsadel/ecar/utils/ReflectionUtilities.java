@@ -1,10 +1,11 @@
 package com.michalsadel.ecar.utils;
 
-import org.slf4j.*;
-import org.springframework.data.util.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.util.ReflectionUtils;
 
-import javax.persistence.*;
-import java.lang.reflect.*;
+import javax.persistence.GeneratedValue;
+import java.lang.reflect.Field;
 
 public class ReflectionUtilities {
     private static final Logger log = LoggerFactory.getLogger(ReflectionUtilities.class);

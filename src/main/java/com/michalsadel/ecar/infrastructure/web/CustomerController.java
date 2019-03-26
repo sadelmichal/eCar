@@ -1,15 +1,15 @@
 package com.michalsadel.ecar.infrastructure.web;
 
-import com.michalsadel.ecar.charge.dto.*;
-import com.michalsadel.ecar.customer.*;
-import com.michalsadel.ecar.customer.dto.*;
-import com.michalsadel.ecar.price.dto.*;
-import org.springframework.http.*;
+import com.michalsadel.ecar.charge.dto.ChargeDto;
+import com.michalsadel.ecar.customer.CustomerFacade;
+import com.michalsadel.ecar.customer.dto.CustomerDto;
+import com.michalsadel.ecar.price.dto.DateTimeRangeDto;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.*;
-import java.math.*;
-import java.util.*;
+import javax.validation.Valid;
+import java.math.BigDecimal;
+import java.util.List;
 
 @RestController
 class CustomerController {

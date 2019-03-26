@@ -1,11 +1,12 @@
 package com.michalsadel.ecar.price;
 
-import com.michalsadel.ecar.price.dto.*;
+import com.michalsadel.ecar.price.dto.PriceDto;
+import com.michalsadel.ecar.price.dto.TimeRangeDto;
 
-import java.time.*;
-import java.util.*;
+import java.time.LocalTime;
+import java.util.Optional;
 
-import static java.util.Objects.*;
+import static java.util.Objects.requireNonNull;
 
 class DefaultPriceFactory implements PriceFactory {
     @Override

@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = [Application])
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @Transactional
-class CustomerControllerSpec extends MvcSpec implements ServiceSpec  {
+class CustomerControllerSpec extends MvcSpec implements ServiceSpec {
 
     @Autowired
     private PriceFacade priceService
@@ -31,19 +31,19 @@ class CustomerControllerSpec extends MvcSpec implements ServiceSpec  {
 
     def "should standard customer be charged 20EUR and VIP customer receive 10% discount"() {
         given: "there is one default 1EUR per minute price in the system"
-            priceService.add(createDefaultPrice())
+        priceService.add(createDefaultPrice())
         and: "there is one VIP customer"
-            def vip = customerFacade.add(CustomerDto.builder().customerType(CustomerTypeDto.VIP).build())
+        def vip = customerFacade.add(CustomerDto.builder().customerType(CustomerTypeDto.VIP).build())
         when: "post with 20 minute charge time is made to /customers/{customerId}/charge"
-            ResultActions charge = mvc.perform(
-                    post("/customers/{customerId}/charge", 0)
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content('{"start": "2019-01-01T00:00", "finish":"2019-01-01T00:20"}')
-            )
+        ResultActions charge = mvc.perform(
+                post("/customers/{customerId}/charge", 0)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content('{"start": "2019-01-01T00:00", "finish":"2019-01-01T00:20"}')
+        )
         then: "charge is 20EUR"
-            charge
-                    .andExpect(status().isOk())
-                    .andExpect(content().json('{"charge": 20}'))
+        charge
+                .andExpect(status().isOk())
+                .andExpect(content().json('{"charge": 20}'))
 
         when: "post with 20 minute charge time is made to /customers/42/charge"
         ResultActions vipCharge = mvc.perform(
@@ -52,20 +52,20 @@ class CustomerControllerSpec extends MvcSpec implements ServiceSpec  {
                         .content('{"start": "2019-01-01T00:00", "finish":"2019-01-01T00:20"}')
         )
         then: "charge is 18EUR"
-            vipCharge
+        vipCharge
                 .andExpect(status().isOk())
                 .andExpect(content().json('{"charge": 18}'))
     }
 
     def "should get customers"() {
         given: "there are two customers in the system one of them is VIP"
-            customerFacade.add(CustomerDto.builder().customerType(CustomerTypeDto.DEFAULT).build())
-            customerFacade.add(CustomerDto.builder().customerType(CustomerTypeDto.VIP).build())
+        customerFacade.add(CustomerDto.builder().customerType(CustomerTypeDto.DEFAULT).build())
+        customerFacade.add(CustomerDto.builder().customerType(CustomerTypeDto.VIP).build())
         when: "ask for customers"
-            ResultActions customers = mvc.perform(
-                    get("/customers"))
+        ResultActions customers = mvc.perform(
+                get("/customers"))
         then: "have two customers which one of them is VIP"
-            customers
+        customers
                 .andExpect(status().isOk())
                 .andExpect(content().json("""
                         [

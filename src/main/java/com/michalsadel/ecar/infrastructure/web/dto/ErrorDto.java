@@ -1,6 +1,7 @@
 package com.michalsadel.ecar.infrastructure.web.dto;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 
 @Data
 @Builder

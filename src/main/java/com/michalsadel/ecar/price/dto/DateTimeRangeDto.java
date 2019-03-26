@@ -1,9 +1,12 @@
 package com.michalsadel.ecar.price.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.*;
-import java.time.*;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 @Builder
 @NoArgsConstructor

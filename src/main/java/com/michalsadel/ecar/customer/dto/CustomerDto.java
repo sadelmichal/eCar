@@ -1,9 +1,12 @@
 package com.michalsadel.ecar.customer.dto;
 
-import io.swagger.annotations.*;
-import lombok.*;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Builder

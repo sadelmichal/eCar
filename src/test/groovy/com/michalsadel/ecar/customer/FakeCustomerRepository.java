@@ -2,10 +2,11 @@ package com.michalsadel.ecar.customer;
 
 import com.michalsadel.ecar.utils.ReflectionUtilities;
 
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
-import static java.util.Objects.*;
+import static java.util.Objects.requireNonNull;
 
 class FakeCustomerRepository implements CustomerRepository {
     private ConcurrentHashMap<Long, Customer> map = new ConcurrentHashMap<>();

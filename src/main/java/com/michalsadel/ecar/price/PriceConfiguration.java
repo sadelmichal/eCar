@@ -1,6 +1,7 @@
 package com.michalsadel.ecar.price;
 
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 class PriceConfiguration {

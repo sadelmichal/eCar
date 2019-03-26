@@ -1,7 +1,7 @@
 package com.michalsadel.ecar.customer;
 
-import com.michalsadel.ecar.charge.*;
-import com.michalsadel.ecar.price.*;
+import com.michalsadel.ecar.charge.ChargeFacade;
+import com.michalsadel.ecar.price.PriceFacade;
 
 class CustomerTestConfiguration {
     private final CustomerRepository customerRepository;

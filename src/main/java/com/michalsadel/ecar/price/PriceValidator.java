@@ -1,8 +1,10 @@
 package com.michalsadel.ecar.price;
 
-import com.michalsadel.ecar.price.exceptions.*;
+import com.michalsadel.ecar.price.exceptions.PriceInvalidTimeRangeException;
+import com.michalsadel.ecar.price.exceptions.PriceIsBelowZeroException;
+import com.michalsadel.ecar.price.exceptions.PriceOverlapsAnotherPriceException;
 
-import java.util.*;
+import java.util.Optional;
 
 class PriceValidator {
     private final PriceRepository priceRepository;
@@ -11,7 +13,7 @@ class PriceValidator {
         this.priceRepository = priceRepository;
     }
 
-    void validate(Price price){
+    void validate(Price price) {
         priceRepository.findAll().stream()
                 .filter(p -> p.isDefaultPrice() == price.isDefaultPrice())
                 .filter(p -> p.overlaps(price))

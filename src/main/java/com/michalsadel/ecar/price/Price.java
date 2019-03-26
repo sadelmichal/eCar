@@ -1,14 +1,18 @@
 package com.michalsadel.ecar.price;
 
 import com.michalsadel.ecar.Entity;
-import com.michalsadel.ecar.price.dto.*;
-import lombok.*;
+import com.michalsadel.ecar.price.dto.PriceDto;
+import com.michalsadel.ecar.price.dto.TimeRangeDto;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-import java.math.*;
-import java.time.*;
-import java.time.temporal.*;
+import java.math.BigDecimal;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 
-import static java.util.Objects.*;
+import static java.util.Objects.requireNonNull;
 
 @javax.persistence.Entity
 @Builder

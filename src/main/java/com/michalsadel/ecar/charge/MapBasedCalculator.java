@@ -1,16 +1,21 @@
 package com.michalsadel.ecar.charge;
 
-import com.michalsadel.ecar.price.dto.*;
-import org.slf4j.*;
-import org.springframework.core.convert.*;
+import com.michalsadel.ecar.price.dto.PriceDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.convert.ConversionService;
 
-import java.math.*;
-import java.time.*;
+import java.math.BigDecimal;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.*;
-import java.util.function.*;
-import java.util.stream.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
+import java.util.stream.Stream;
 
-import static java.math.BigDecimal.*;
+import static java.math.BigDecimal.ZERO;
 
 class MapBasedCalculator implements ChargeCalculator {
     private static final Logger log = LoggerFactory.getLogger(MapBasedCalculator.class);
@@ -27,6 +32,15 @@ class MapBasedCalculator implements ChargeCalculator {
                 IntStream.range(0, MINUTES_PER_DAY)
                         .boxed()
                         .collect(Collectors.toMap(Function.identity(), value -> ZERO)));
+    }
+
+    @Override
+    public BigDecimal calculate(LocalDateTime startsAt, LocalDateTime finishesAt, List<PriceDto> prices) {
+        log.info("Calculated using {}", getClass().getSimpleName());
+        final Map<Integer, BigDecimal> priceMap = createPriceMap(prices);
+        return LongStream.range(0, Duration.between(startsAt, finishesAt).toMinutes())
+                .mapToObj(minute -> priceMap.get(minuteKey(startsAt, (int) minute)))
+                .reduce(ZERO, BigDecimal::add);
     }
 
     private Integer getMinuteOfDay(LocalDateTime dateTime) {
@@ -55,14 +69,5 @@ class MapBasedCalculator implements ChargeCalculator {
                 .flatMap(Function.identity()))
                 .sorted(Map.Entry.comparingByKey())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (price1, price2) -> price2));
-    }
-
-    @Override
-    public BigDecimal calculate(LocalDateTime startsAt, LocalDateTime finishesAt, List<PriceDto> prices) {
-        log.info("Calculated using {}", getClass().getSimpleName());
-        final Map<Integer, BigDecimal> priceMap = createPriceMap(prices);
-        return LongStream.range(0, Duration.between(startsAt, finishesAt).toMinutes())
-                .mapToObj(minute -> priceMap.get(minuteKey(startsAt, (int) minute)))
-                .reduce(ZERO, BigDecimal::add);
     }
 }

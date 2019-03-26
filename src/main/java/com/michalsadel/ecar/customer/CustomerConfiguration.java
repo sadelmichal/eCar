@@ -1,8 +1,9 @@
 package com.michalsadel.ecar.customer;
 
-import com.michalsadel.ecar.charge.*;
-import com.michalsadel.ecar.price.*;
-import org.springframework.context.annotation.*;
+import com.michalsadel.ecar.charge.ChargeFacade;
+import com.michalsadel.ecar.price.PriceFacade;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 class CustomerConfiguration {

@@ -17,26 +17,26 @@ trait ServiceSpec {
         return LocalDateTime.parse(dateTime)
     }
 
-    static PriceDto createDefaultPrice(BigDecimal price = 1.0){
+    static PriceDto createDefaultPrice(BigDecimal price = 1.0) {
         PriceDto.builder()
                 .perMinute(price)
                 .build()
     }
 
-    static PriceDto createPrice(String starts, String finishes, BigDecimal price = 1.0){
+    static PriceDto createPrice(String starts, String finishes, BigDecimal price = 1.0) {
         return PriceDto.builder()
-            .perMinute(price)
-            .effectedIn(TimeRangeDto.builder()
+                .perMinute(price)
+                .effectedIn(TimeRangeDto.builder()
                 .startsAt(time(starts))
                 .finishesAt(time(finishes))
                 .build())
-        .build()
+                .build()
     }
 
-    static DateTimeRangeDto createDuration(String starts, String finishes){
+    static DateTimeRangeDto createDuration(String starts, String finishes) {
         return DateTimeRangeDto.builder()
-            .start(dateTime(starts))
-            .finish(dateTime(finishes))
-        .build()
+                .start(dateTime(starts))
+                .finish(dateTime(finishes))
+                .build()
     }
 }

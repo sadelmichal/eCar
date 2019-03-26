@@ -1,12 +1,12 @@
 package com.michalsadel.ecar.infrastructure.web;
 
-import com.michalsadel.ecar.price.*;
-import com.michalsadel.ecar.price.dto.*;
-import org.springframework.http.*;
+import com.michalsadel.ecar.price.PriceFacade;
+import com.michalsadel.ecar.price.dto.PriceDto;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.*;
-import java.util.*;
+import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 class PriceController {

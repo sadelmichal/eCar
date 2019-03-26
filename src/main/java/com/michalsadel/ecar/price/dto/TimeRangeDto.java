@@ -1,11 +1,14 @@
 package com.michalsadel.ecar.price.dto;
 
-import com.fasterxml.jackson.annotation.*;
-import io.swagger.annotations.*;
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.*;
-import java.time.*;
+import javax.validation.constraints.NotNull;
+import java.time.LocalTime;
 
 @Builder
 @NoArgsConstructor

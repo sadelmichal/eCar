@@ -1,8 +1,9 @@
 package com.michalsadel.ecar.charge.dto;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
 
-import java.math.*;
+import java.math.BigDecimal;
 
 @Getter
 @Builder

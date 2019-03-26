@@ -1,9 +1,11 @@
 package com.michalsadel.ecar.customer;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
 
-import java.math.*;
-import java.util.function.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.function.Function;
 
 enum CustomerType {
     DEFAULT(CustomerType::normalPrice), VIP(CustomerType::tenPercentDiscount);

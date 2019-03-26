@@ -1,11 +1,14 @@
 package com.michalsadel.ecar.price.dto;
 
-import io.swagger.annotations.*;
-import lombok.*;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.validation.*;
-import javax.validation.constraints.*;
-import java.math.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 @Builder
 @NoArgsConstructor

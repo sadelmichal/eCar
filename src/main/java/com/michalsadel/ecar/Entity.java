@@ -1,8 +1,11 @@
 package com.michalsadel.ecar;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
 @Getter(AccessLevel.PUBLIC)
 @MappedSuperclass

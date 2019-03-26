@@ -1,11 +1,11 @@
 package com.michalsadel.ecar.charge;
 
-import org.springframework.core.convert.converter.*;
+import org.springframework.core.convert.converter.Converter;
 
-import java.time.*;
-import java.time.temporal.*;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoField;
 
-import static java.util.Objects.*;
+import static java.util.Objects.requireNonNull;
 
 class LocalDateTimeToMinuteOfADayConverter implements Converter<LocalDateTime, Integer> {
     @Override
