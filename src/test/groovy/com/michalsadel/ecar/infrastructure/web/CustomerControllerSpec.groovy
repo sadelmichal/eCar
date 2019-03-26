@@ -34,9 +34,9 @@ class CustomerControllerSpec extends MvcSpec implements ServiceSpec  {
             priceService.add(createDefaultPrice())
         and: "there is one VIP customer"
             def vip = customerFacade.add(CustomerDto.builder().customerType(CustomerTypeDto.VIP).build())
-        when: "post with 20 minute charge time is made to /customer/{customerId}/charge"
+        when: "post with 20 minute charge time is made to /customers/{customerId}/charge"
             ResultActions charge = mvc.perform(
-                    post("/customer/{customerId}/charge", 0)
+                    post("/customers/{customerId}/charge", 0)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content('{"start": "2019-01-01T00:00", "finish":"2019-01-01T00:20"}')
             )
@@ -45,9 +45,9 @@ class CustomerControllerSpec extends MvcSpec implements ServiceSpec  {
                     .andExpect(status().isOk())
                     .andExpect(content().json('{"charge": 20}'))
 
-        when: "post with 20 minute charge time is made to /customer/42/charge"
+        when: "post with 20 minute charge time is made to /customers/42/charge"
         ResultActions vipCharge = mvc.perform(
-                post("/customer/{customerId}/charge", vip.getId())
+                post("/customers/{customerId}/charge", vip.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content('{"start": "2019-01-01T00:00", "finish":"2019-01-01T00:20"}')
         )

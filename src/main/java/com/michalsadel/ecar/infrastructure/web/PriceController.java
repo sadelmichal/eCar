@@ -16,7 +16,7 @@ class PriceController {
         this.priceFacade = priceFacade;
     }
 
-    @PostMapping("/price")
+    @PostMapping("/prices")
     ResponseEntity addPrice(@Valid @RequestBody PriceDto priceDto) {
         priceFacade.add(priceDto);
         return ResponseEntity.accepted().build();

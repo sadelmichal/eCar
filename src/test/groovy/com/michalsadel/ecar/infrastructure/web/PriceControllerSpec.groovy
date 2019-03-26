@@ -26,17 +26,17 @@ class PriceControllerSpec extends MvcSpec implements ServiceSpec {
     private PriceFacade priceFacade
 
     def "should default price be accepted and creation of another default price rejected"() {
-        when: "post with default price of 1EUR per minute is made to /price"
+        when: "post with default price of 1EUR per minute is made to /prices"
             ResultActions firstPrice = mvc.perform(
-                    post("/price")
+                    post("/prices")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content('{"perMinute": 1}'))
         then: "price is accepted"
             firstPrice.andExpect(status().isAccepted())
 
-        when: "post with another default price of 2EUR per minute is made to /price"
+        when: "post with another default price of 2EUR per minute is made to /prices"
         ResultActions secondPrice = mvc.perform(
-                post("/price")
+                post("/prices")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content('{"perMinute": 2}'))
         then: "price is rejected"
@@ -47,7 +47,7 @@ class PriceControllerSpec extends MvcSpec implements ServiceSpec {
     def "should not be allowed to partially define time range in price definition"(){
         when: "another price definition is added without finishesAt"
             ResultActions price = mvc.perform(
-                post("/price")
+                post("/prices")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content('{ "perMinute": 1, "effectedIn": {"startsAt": "05:00"} }'))
         then:

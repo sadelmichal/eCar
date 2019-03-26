@@ -19,14 +19,14 @@ class CustomerController {
         this.customerFacade = customerFacade;
     }
 
-    @PostMapping("/customer/{customerId}/charge")
+    @PostMapping("/customers/{customerId}/charge")
     @ResponseBody
     ChargeDto charge(@PathVariable Long customerId, @RequestBody @Valid DateTimeRangeDto dateTimeRangeDto) {
         final BigDecimal charge = customerFacade.charge(dateTimeRangeDto.getStart(), dateTimeRangeDto.getFinish(), customerId);
         return ChargeDto.builder().charge(charge).build();
     }
 
-    @PostMapping("/customer")
+    @PostMapping("/customers")
     @ResponseBody
     CustomerDto addCustomer(@Valid @RequestBody CustomerDto customerDto) {
         return customerFacade.add(customerDto);
