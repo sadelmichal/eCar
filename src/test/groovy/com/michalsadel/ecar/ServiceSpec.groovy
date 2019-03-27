@@ -1,6 +1,5 @@
 package com.michalsadel.ecar
 
-import com.michalsadel.ecar.price.dto.DateTimeRangeDto
 import com.michalsadel.ecar.price.dto.PriceDto
 import com.michalsadel.ecar.price.dto.TimeRangeDto
 
@@ -30,13 +29,6 @@ trait ServiceSpec {
                 .startsAt(time(starts))
                 .finishesAt(time(finishes))
                 .build())
-                .build()
-    }
-
-    static DateTimeRangeDto createDuration(String starts, String finishes) {
-        return DateTimeRangeDto.builder()
-                .start(dateTime(starts))
-                .finish(dateTime(finishes))
                 .build()
     }
 }

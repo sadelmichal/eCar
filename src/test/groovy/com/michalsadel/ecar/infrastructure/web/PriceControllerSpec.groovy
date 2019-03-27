@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = [Application])
 @Transactional
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-class PriceControllerSpec extends MvcSpec implements ServiceSpec {
+class PriceControllerSpec extends MvcSpec {
     @Autowired
     private CustomerFacade chargeService
     @Autowired
@@ -27,45 +27,44 @@ class PriceControllerSpec extends MvcSpec implements ServiceSpec {
 
     def "should default price be accepted and creation of another default price rejected"() {
         when: "post with default price of 1EUR per minute is made to /prices"
-        ResultActions firstPrice = mvc.perform(
-                post("/prices")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content('{"perMinute": 1}'))
+          ResultActions firstPrice = mvc.perform(
+                    post("/prices")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content('{"perMinute": 1}'))
         then: "price is accepted"
-        firstPrice.andExpect(status().isAccepted())
-
+            firstPrice.andExpect(status().isAccepted())
         when: "post with another default price of 2EUR per minute is made to /prices"
-        ResultActions secondPrice = mvc.perform(
-                post("/prices")
+            ResultActions secondPrice = mvc.perform(
+                    post("/prices")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content('{"perMinute": 2}'))
         then: "price is rejected"
-        secondPrice
+            secondPrice
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath('$.error', containsString("Price provided overlaps price defined in the system")))
     }
 
     def "should not be allowed to partially define time range in price definition"() {
         when: "another price definition is added without finishesAt"
-        ResultActions price = mvc.perform(
-                post("/prices")
+            ResultActions price = mvc.perform(
+                    post("/prices")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content('{ "perMinute": 1, "effectedIn": {"startsAt": "05:00"} }'))
         then:
-        price.andExpect(status().isBadRequest())
+            price.andExpect(status().isBadRequest())
 
     }
 
     def "should get prices"() {
         given: "there are one three prices in the system"
-        priceFacade.add(createDefaultPrice())
-        priceFacade.add(createPrice("21:30", "22:18", 2.0))
-        priceFacade.add(createPrice("23:30", "23:35", 3.0))
+            priceFacade.add(createDefaultPrice())
+            priceFacade.add(createPrice("21:30", "22:18", 2.0))
+            priceFacade.add(createPrice("23:30", "23:35", 3.0))
         when: "ask for prices"
-        ResultActions prices = mvc.perform(
-                get("/prices"))
+            ResultActions prices = mvc.perform(
+                    get("/prices"))
         then: "have three prices"
-        prices
+            prices
                 .andExpect(status().isOk())
                 .andExpect(content().json("""
                         [
